@@ -1,0 +1,6 @@
+# requirements for running the code
+See theDoc https://github.com/jgerstmayr/EXUDYN/blob/master/docs/theDoc, section 1.2
+
+# requirement for compiling the LaTeX files (?)
+LaTeX editor
+
