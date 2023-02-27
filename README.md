@@ -1,11 +1,17 @@
 # Belt drive simulation
 
-This is a python code for the test case WP2-T6, see D2.2.
+Code for a belt drive consisted of an elastic belt and two identical pulleys. For simulating the system we applied a special modelling for the normal and tangential contact between pulleys and belt, while for the numerical modeling of the belt we employed a special ANCF element. All methods are described in the documentation.
 
-![](https://github.com/THREAD-2-3/.github/blob/main/profile/thread-logo.jpg)
-![](https://github.com/THREAD-2-3/.github/blob/main/profile/flag_yellow.png)
+Apart from the methods applied, in the docs you can find the description of the example and the code. See .pdf file. In src you can fing the python code.
 
-This project has received funding from the European Union's Horizon 2020 research and innovation programme under the Marie Sklodowska-Curie grant agreement No 860124. 
+For running the code:
 
-Add here instructions for running the test case.
+* fufill the requirements noted in requirements.txt,
+
+* read the example's description given in the documentation. 
+
+* read the description of the code and follow the instructions given.
+
+
+
  
