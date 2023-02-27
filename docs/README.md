@@ -1,0 +1,1 @@
+The main file can be compiled but all other subsections are just to be added for the mainFile so that it can be added all together in one Latex. 
