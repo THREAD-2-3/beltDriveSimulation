@@ -1,6 +1,3 @@
-# requirements for running the code
-See theDoc https://github.com/jgerstmayr/EXUDYN/blob/master/docs/theDoc, section 1.2
-
-# requirement for compiling the LaTeX files (?)
-LaTeX editor
+The requirements for running the code are described in Exudyn's documentation, see 
+https://github.com/jgerstmayr/EXUDYN/blob/master/docs/theDoc, section 1.2.
 

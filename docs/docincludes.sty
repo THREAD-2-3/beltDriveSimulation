@@ -1,0 +1,185 @@
+%++++++++++++++++++++++++++++++++++++++++++++++++
+%practical definitions for latex
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{docincludes}
+
+%++++++++++++++++++++++++++++++++++++++++++
+
+\newcommand{\eqDot}{\; .} %dot at end of equations
+\newcommand{\eqComma}{\; ,} %comma at end of equations
+
+%\newcommand{\exuUrl}[2]{\href{#1}{\underline{#2}}} %\exuUrl{github.com}{link to github}
+%\newcommand{\refSection}[1]{\hyperref[#1]{\underline{Section \ref*{#1}}}} %see \refSection{sec_label}
+%\newcommand{\refChapter}[1]{\hyperref[#1]{\underline{Chapter \ref*{#1}}}} %see \refSection{sec_label}
+
+%for acronyms:
+%\newcommand{\hac}[1]{\hyperref[sec:abbreviations]{\ac{#1}}} %acronym with hyperlink
+%\newcommand{\hacs}[1]{\hyperref[sec:abbreviations]{\acs{#1}}} %short acronym with hyperlink
+\newcommand{\hac}[1]{\ac{#1}} %change of ac allows to modify it in future
+\newcommand{\hacs}[1]{\acs{#1}} %short acronym; change of acs allows to modify it in future
+
+%++++++++++++++++++++++++++++++++++++++++++
+%common abbreviations:
+\newcommand{\ba}{\begin{array}{c}}
+\newcommand{\ea}{\end{array}}
+
+\newcommand{\be}{\begin{equation}}
+\newcommand{\ee}{\end{equation}}
+
+\newcommand{\bea}{\begin{eqnarray}}
+\newcommand{\eea}{\end{eqnarray}}
+
+\newcommand{\bi}{\begin{itemize} \itemsep -2pt}
+\newcommand{\ei}{\end{itemize}}
+
+\newcommand{\bn}{\begin{enumerate} \itemsep -2pt}
+\newcommand{\en}{\end{enumerate}}
+
+%vector/matrix: (3D)
+\newcommand{\vr}[3]{\left[\!\! \begin{array}{c} { #1}\vspace{0.1cm} \\ { #2}\vspace{0.1cm} \\ { #3} \end{array} \!\!\right]}
+\newcommand{\mr}[9]{\left[\!\! \begin{array}{ccc} #1 & #2 & #3 \vspace{0.1cm}\\ #4 & #5 & #6 \vspace{0.1cm}\\ #7 & #8 & #9  \end{array} \!\!\right]}
+\newcommand{\vsix}[6]{\left[\!\! \begin{array}{c} { #1} \\ { #2} \\ { #3} \\ { #4} \\ { #5} \\ { #6} \end{array} \!\!\right]}
+\newcommand{\vsixb}[6]{\begin{array}{c} { #1} \\ { #2} \\ { #3} \\ { #4} \\ { #5} \\ { #6} \end{array} }
+
+\newcommand{\vsixs}[6]{ \begin{array}{c} { #1} \\ { #2} \\ { #3} \\ { #4} \\ { #5} \\ { #6} \end{array} }
+
+%vector/matrix: (2D)
+\newcommand{\vp}[2]{\left[\!\! \begin{array}{c} { #1} \vspace{0.1cm}\\ { #2} \end{array} \!\!\right]}
+\renewcommand{\mp}[4]{\left[\!\! \begin{array}{cc} #1 & #2 \vspace{0.1cm}\\ #3 & #4 \end{array} \!\!\right]}
+
+%use following commands for unique german/english
+\newcommand{\eq}[1]{Eq.~(\ref{#1})}
+\newcommand{\eqs}[1]{Eqs.~(\ref{#1})}
+\newcommand{\eqq}[1]{(\ref{#1})}
+%\newcommand{\fig}[1]{Fig.~\ref{#1}}
+%\newcommand{\figs}[2]{Figs.~\ref{#1} and \ref{#2}}
+%\newcommand{\figss}[2]{Figs.~\ref{#1} - \ref{#2}}
+%\newcommand{\mytab}[1]{Tab.~\ref{#1}}
+\newcommand{\fig}[1]{Figure~\ref{#1}}
+\newcommand{\figs}[2]{Figures~\ref{#1} and \ref{#2}}
+\newcommand{\figss}[2]{Figures~\ref{#1} - \ref{#2}}
+\newcommand{\mytab}[1]{Table~\ref{#1}}
+
+\newcommand{\ra}{\rightarrow}
+\newcommand{\mybold}[1]{{\bf #1}} 
+%\newcommand{\myNewline}{\\} 
+
+\newcommand{\Rcal}{\mathbb{R}}
+\newcommand{\Ccal}{\mathbb{C}}
+\newcommand{\Ncal}{\mathbb{N}}
+
+%vectors
+\newcommand{\av}{\mathbf{a}}
+\newcommand{\bv}{\mathbf{b}}
+\newcommand{\cv}{\mathbf{c}}
+\newcommand{\dv}{\mathbf{d}}
+\newcommand{\ev}{\mathbf{e}}
+\newcommand{\fv}{\mathbf{f}}
+\newcommand{\gv}{\mathbf{g}}
+\newcommand{\hv}{\mathbf{h}}
+\newcommand{\iv}{\mathbf{i}}
+\newcommand{\jv}{\mathbf{j}}
+\newcommand{\kv}{\mathbf{k}}
+\newcommand{\mv}{\mathbf{m}}
+\newcommand{\nv}{\mathbf{n}}
+\newcommand{\ov}{\mathbf{o}}
+\newcommand{\pv}{\mathbf{p}}
+\newcommand{\qv}{\mathbf{q}}
+\newcommand{\rv}{\mathbf{r}}
+\newcommand{\sv}{\mathbf{s}}
+\newcommand{\tv}{\mathbf{t}}
+\newcommand{\uv}{\mathbf{u}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\wv}{\mathbf{w}}
+\newcommand{\xv}{\mathbf{x}}
+\newcommand{\yv}{\mathbf{y}}
+\newcommand{\zv}{\mathbf{z}}
+\newcommand{\Fv}{\mathbf{F}}
+\newcommand{\Mv}{\mathbf{M}}
+
+%matrices
+\newcommand{\Am}{\mathbf{A}}
+\newcommand{\Bm}{\mathbf{B}}
+\newcommand{\Cm}{\mathbf{C}}
+\newcommand{\Dm}{\mathbf{D}}
+\newcommand{\Em}{\mathbf{E}}
+\newcommand{\Gm}{\mathbf{G}}
+\newcommand{\Hm}{\mathbf{H}}
+\renewcommand{\Im}{\mathbf{I}}
+\newcommand{\Jm}{\mathbf{J}}
+\newcommand{\Km}{\mathbf{K}}
+\newcommand{\Lm}{\mathbf{L}}
+\newcommand{\Mm}{\mathbf{M}}
+\newcommand{\Nm}{\mathbf{N}}
+\newcommand{\Qm}{\mathbf{Q}}
+\newcommand{\Pm}{\mathbf{P}}
+\newcommand{\Rm}{\mathbf{R}}
+\newcommand{\Sm}{\mathbf{S}}
+\newcommand{\Tm}{\mathbf{T}}
+\newcommand{\Um}{\mathbf{U}}
+\newcommand{\Vm}{\mathbf{V}}
+\newcommand{\Wm}{\mathbf{W}}
+\newcommand{\Xm}{\mathbf{X}}
+\newcommand{\Ym}{\mathbf{Y}}
+\newcommand{\Zm}{\mathbf{Z}}
+
+\newcommand{\Rot}{\mathbf{A}}
+\newcommand{\dd}{\mathrm{d}}
+
+\newcommand{\co}{\mathrm{c}}
+%\newcommand{\si}{\mathrm{s}}
+
+\newcommand{\tp}{^\mathrm{T}} %transpose
+
+\newcommand{\diag}{\mathrm{diag}} %transpose
+\renewcommand{\vec}{\mathrm{vec}} %transpose
+
+\newcommand{\Null}{\mathbf{0}}
+
+%+++++++++++++++++++++++++++++++++++++++++++++
+%bold greek letters, with preceding t for thick
+\newcommand{\talpha}{\mbox{\boldmath $\alpha$ \unboldmath}\!\!}
+\newcommand{\tbeta}{\mbox{\boldmath $\beta$ \unboldmath}\!\!}
+\newcommand{\tgamma}{\mbox{\boldmath $\gamma$ \unboldmath}\!\!}
+\newcommand{\tchi}{\mbox{\boldmath $\chi$ \unboldmath}\!\!}
+\newcommand{\tdelta}{\mbox{\boldmath $\delta$ \unboldmath}\!\!}
+\newcommand{\teps}{\mbox{\boldmath $\varepsilon$ \unboldmath}\!\!}
+\newcommand{\teta}{\mbox{\boldmath $\eta$ \unboldmath}\!\!}
+\newcommand{\tphi}{\mbox{\boldmath $\phi$ \unboldmath}\!\!}
+\newcommand{\tPhi}{\mbox{\boldmath $\Phi$ \unboldmath}\!\!}
+\newcommand{\ttheta}{\mbox{\boldmath $\theta$ \unboldmath}\!\!}
+\newcommand{\tTheta}{\mbox{\boldmath $\Theta$ \unboldmath}\!\!}
+\newcommand{\tlambda}{\mbox{\boldmath $\lambda$ \unboldmath}\!\!}
+\newcommand{\tnu}{\mbox{\boldmath $\nu$ \unboldmath}\!\!}
+\newcommand{\tmu}{\mbox{\boldmath $\mu$ \unboldmath}\!\!}
+\newcommand{\tpsi}{\mbox{\boldmath $\psi$ \unboldmath}\!\!}
+\newcommand{\tPsi}{\mbox{\boldmath $\Psi$ \unboldmath}\!\!}
+\newcommand{\ttau}{\mbox{\boldmath $\tau$ \unboldmath}\!\!}
+\newcommand{\tsigma}{\mbox{\boldmath $\sigma$ \unboldmath}\!\!}
+\newcommand{\txi}{\mbox{\boldmath $\xi$ \unboldmath}\!\!}
+\newcommand{\tzeta}{\mbox{\boldmath $\zeta$ \unboldmath}\!\!}
+\newcommand{\tomega}{\mbox{\boldmath $\omega$ \unboldmath}\!\!}
+\newcommand{\tOmega}{\mbox{\boldmath $\Omega$ \unboldmath}\!\!}
+
+\newcommand{\vareps}{\varepsilon}
+
+%left index:
+%\newcommand{\LU}[2]{{^{#1}#2}\,}
+\newcommand{\LU}[2]{\prescript{#1}{}{#2}\,}
+\newcommand{\LUX}[3]{\prescript{#1}{}{#2}#3\,} %for \LUX{0}{\Am}{_k^\mathrm{T}}
+\newcommand{\LUR}[3]{\prescript{#1}{}{#2}_{#3}\,}
+\newcommand{\LURU}[4]{\prescript{#1}{}{#2}_{#3}^{#4}\,}
+\newcommand{\LLdot}[3]{\prescript{}{#1}{\dot{#2}}_{#3}\,}
+
+\renewcommand{\vr}[3]{\left[\!\! \begin{array}{c} { #1}\vspace{0.04cm} \\ { #2}\vspace{0.04cm} \\ { #3} \end{array} \!\!\right]}
+\renewcommand{\mr}[9]{\left[\!\! \begin{array}{ccc} #1 & #2 & #3 \vspace{0.04cm}\\ #4 & #5 & #6 \vspace{0.04cm}\\ #7 & #8 & #9  \end{array} \!\!\right]}
+
+%vector/matrix: (2D)
+\renewcommand{\vp}[2]{\left[\!\! \begin{array}{c} { #1} \vspace{0.04cm}\\ { #2} \end{array} \!\!\right]}
+\renewcommand{\mp}[4]{\left[\!\! \begin{array}{cc} #1 & #2 \vspace{0.04cm}\\ #3 & #4 \end{array} \!\!\right]}
+
+\newcommand{\vfour}[4]{\left[\!\! \begin{array}{c} { #1}\vspace{0.04cm} \\ { #2}\vspace{0.04cm} \\ { #3}\vspace{0.04cm} \\ { #4} \end{array} \!\!\right]}
+
+\newcommand{\mfour}[4]{\left[\!\! \begin{array}{cccc} #1 \vspace{0.04cm}\\ #2 \vspace{0.04cm}\\ #3 \vspace{0.04cm}\\ #4 \end{array} \!\!\right]}
+
+\endinput %for .sty files

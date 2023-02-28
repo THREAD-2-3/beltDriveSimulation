@@ -2,9 +2,61 @@
 \documentclass{article}
 \usepackage[english]{babel}
 \usepackage{graphicx}
+\usepackage{docincludes}
+\usepackage{siunitx}
+
+\usepackage{hyperref}
+\usepackage{cite}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{todonotes} % use \todo{WP2Leader: xyz} \todo{ESRz: xyz} or \todo[inline]{} for simple notes.
+\usepackage{docincludes} %Added
+\usepackage{mathtools} %Added for \prescript
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+
+\definecolor{deepblack}{rgb}{0,0,0}
+\definecolor{deepblue}{rgb}{0,0,0.8}
+\definecolor{deepred}{rgb}{0.6,0,0.4}
+\definecolor{warningRed}{rgb}{1,0.2,0.2}
+\definecolor{deepgreen}{rgb}{0,0.65,0}
+\definecolor{commentgreen}{rgb}{0.5,0.7,0.5}
+
+
+\usepackage{listings} %for codes
+%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+% Python style for highlighting example codes:
+\newcommand\pythonstyle{\lstset{
+language=Python,
+%basicstyle=\ttm, %ttm is not fixedspaced
+basicstyle=\ttfamily\footnotesize,
+otherkeywords={self},             % Add keywords here
+keywordstyle=\ttfamily\footnotesize\bfseries\color{deepblue},
+emph={},          % Custom highlighting
+emphstyle=\ttfamily\footnotesize\bfseries\color{deepred},    % Custom highlighting style
+stringstyle=\color{deepgreen},
+commentstyle=\color{commentgreen},
+frame=none,                         % horizontal line top and bottom
+frame=tb,                         % horizontal line top and bottom
+numbers=left,										 %show line numbers
+breaklines=true,									 %automatically breaks lines
+numberstyle=\ttfamily\footnotesize,    	% line number style
+showstringspaces=false,
+showspaces=false,
+keepspaces=true,
+tabsize=4,
+%columns=flexible, %do not add Phantom spaces at "'"
+%morestring=[b]',%not needed, standard in Python style
+%morestring=[d]',
+}}
+%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
 % is the format okay? format?? 
 \usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
-\title{Template for a contribution}
+\title{Belt drive simulation}
 
 \begin{document}
 \begin{titlepage}
@@ -25,7 +77,10 @@
 \end{center}
 
 \end{titlepage}
-\input{firstTopic.tex}
-% \input{theOthers.tex}
-
+\input{methods.tex}
+\input{descriptionOfExample.tex}
+\input{descriptionOfCode.tex}
+\bibliographystyle{ieeetr}
+%\typeout{}
+\bibliography{literature}
 \end{document}

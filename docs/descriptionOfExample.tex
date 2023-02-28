@@ -1,0 +1,117 @@
+\section{Description of numerical example}
+The belt drive has two pulleys $P_1$ and $P_2$ with identical radius and inertia, see the geometrical setup in \fig{fig:ESR8_BeltDrive}. 
+This numerical example is similar to the one developed in \cite{Pechstein2013} with some modifications which attempt to eliminate the vibrations in the beginning of the simulation and allow the system to reach the steady state. The angular velocity of pulley $P_1$ is prescribed by means of an algebraic constraint, while some resistance torque over time is added to pulley $P_2$, see the description hereafter.
+%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+\begin{figure}[tbph]
+    \centering
+    \includegraphics[width=0.55\textwidth]{figures/ESR8_beltPechstein.pdf}
+    \caption{Belt drive with two pulleys, displaced from initial position by $u_0$.}
+    \label{fig:ESR8_BeltDrive}
+\end{figure}
+%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+\begin{table}
+    \caption{Main parameters for the belt drive.} \label{tab:reeving_system_parameters1}
+    \centering
+    %\begin{tabular}{@{}lrlp{0.4\textwidth}@{}} \toprule
+    \begin{tabular}{c|c|c|c} \hline
+        Parameter & Value & Units & Description \\ \hline 
+        $r$ & 
+            $0.09995$ & \si{\meter} &
+            pulley radius  \\
+        $d$ & 
+            $0.1 \pi$ & \si{\meter} &
+            distance between two pulleys \\
+        $h_b$ & 
+            $0.0001$ & \si{\meter} & 
+            belt height \\
+        $w_b$ & 
+            $0.08$ & \si{\meter}  & 
+            belt width \\
+        $\bar l_b$ & 
+            $0.38 \pi$ &  \si{\meter} &  stress-free belt length
+            \\
+        $l_b$ & 
+            $0.4 \pi$ &  \si{\meter} &
+            initial, deformed belt length\\
+        $\varepsilon_{ref}$ & 
+            $-0.05$ &  - &
+            added reference axial strain of the belt\\% (causing pre-tension)\\
+        $u_0$ & 
+            $0.$ & \si{\meter} &
+            horizontal displacement (used only in original model \cite{Pechstein2013})\\
+ %       $E$ & 
+%            $10^7$ & \si{\newton \per \meter \squared} &
+ %           Young's modulus \\
+        $EA$ & 
+            $8000$ & \si{\newton \meter} &
+            axial stiffness \\ 
+        $EI$ & 
+            $\frac{4}{3} \cdot 10^{-3} $ & \si{\newton \meter \squared} &
+            bending stiffness \\             
+        $\rho$ & 
+            $1036$ & \si{\kilogram \per \meter ^3}&
+            beam density \\
+        $dEA$ & 
+            $1$ & \si{\newton \per {\meter \second}\squared} &
+            strain proportional damping \\ 
+        $\omega_{P1}$ & 
+            $12$ & rad \si{\per \second} & 
+            angular velocity of driving pulley \\
+        $d_{P2}$ & 
+            $2$ & \si{\newton \meter \per {\second}} &
+            angular velocity proportional damping at pulley $P_2$ \\ 
+        $t_0$ & 
+            $0.05$ & \si{\second} & 
+            driving start time  \\
+        $t_1$ & 
+            $0.60$ & \si{\second} & 
+            driving end time \\
+        $t_{\tau 0}$ & 
+            $1.0$ & \si{\second} & 
+            torque $\tau_{P2}$ raised at pulley $P_2$  \\
+        $t_{\tau 1}$ & 
+            $1.5$ & \si{\second} & 
+            torque $\tau_{P2}$ at pulley $P_2$ reaches nominal value\\
+        $I_p$ & 
+            $0.25$ & \si{\kilo\gram \per \meter \squared} & 
+            moment of inertia of  pulleys \\
+        %$\mu$ & 
+            %$0.5$ & - & 
+            %friction coefficient \\
+        %$c_c$ & 
+            %$4\cdot 10^9$ & \si{\newton \per \meter ^3} & 
+            %contact stiffness \\
+        $g$ & 9.81 & \si{\meter \per \second \squared} & gravity  
+ \\ \hline
+        %\bottomrule
+    \end{tabular}
+\end{table}
+%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+The belt is modelled as Bernoulli-Euler beam with bending stiffness $EI$, axial stiffness $EA$, rectangular cross section with height $h_b$ and width $w_b$, as well as stretch proportional damping, density, and further parameters given in \mytab{tab:reeving_system_parameters1}.
+A constant acceleration is prescribed to pulley $P_1$ between $t_0$ and $t_1$:
+\be \label{eq:ESR8_torqueP2}
+  \omega_{P1}(t) = \begin{cases} 0\,\frac{\si{\radian}}{\si{\second}},\quad \quad \quad \quad \quad \quad \quad \quad \quad \quad\,\;\;\mathrm{if} \quad t < t_{0} \\
+                  \omega_{P1} \frac{t-t_{0}}{t_{0}-t_{1}}\quad \quad  \quad \quad \quad \quad \quad \quad \quad \;\mathrm{if} \quad t_{0} < t < t_{1} \\ 
+                  12\, \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \mathrm{else} \, .
+                 \end{cases}
+\ee
+% by varying the angular velocity between $0$ and $\omega_{P1}$. Hereafter, a constant angular velocity $\omega_{P1}$ is prescribed to pulley $P_1$. 
+
+
+A torque proportional to the angular velocity is applied to the pulley $P_2$ which represents damping of rotational motion:
+\be \label{eq:ESR8_torqueP2}
+  \tau_{P2}(t) = \begin{cases} 0\,\mathrm{Nm}, \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \,\;\;\mathrm{if} \quad t < 1 \\
+                  25\left(0.5-0.5\cdot \cos\left( 2 (t-1) \pi \right) \right)\mathrm{Nm} \quad \mathrm{if} \quad 1 < t < 1.5 \\ 
+                  25\,\mathrm{Nm} \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \,\,\;\mathrm{else} \, .
+                 \end{cases}
+\ee
+
+As compared to \cite{Pechstein2013}, we use a much smaller belt height $h_b$ in order to exclude bending effects, a higher pre-tension (due to pre-stretch), while keeping the axial stiffness $EA$ the same. Furthermore, the bending stiffness is lowered by a factor of $50$, which reduces bending effects, as it would lead to significant deviations from an analytical solution otherwise.
+The support of pulley $P_1$ is not displaced during the first $0.05\,$s of the simulation, but the pre-stretch $\varepsilon_{ref}$ is applied before running a static computation, which defines a static equilibrium for the dynamic simulation hereafter.
+The contact stiffness, as shown later by the nominal simulation parameters, has been increased by a factor of $40$ and a tangential stiffness (bristle) model has been included in order to retrieve highly accurate contact behavior. %In order to investigate steady state behaviour, the belt drive is first accelerated up to nominal angular velocity $\omega_{P1}$:
+
+% and in the time range $t=[1\,\mathrm{s}, \; 1.5\,\mathrm{s}]$ an additional torque of $25\,$Nm is added to pulley $P_2$, see \eq{eq:ESR8_torqueP2}. 
+%At $t=1\,$s an additional torque is added and raised until $t=1.5\,$s to a constant torque of $25\,$Nm by means of the function
+
+

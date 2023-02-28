@@ -1,0 +1,32 @@
+\section{Description of code}
+For simulating the system we are using the multibody dynamics code Exudyn \cite{Gerstmayr2022}. 
+%
+For the ANCF beam elements modeling the belt we are using ObjectANCFCable2D, see the documentation of Exudyn\footnote{EXUDYN V1.3.86.dev1; https://github.com/jgerstmayr/EXUDYN}, theDoc.
+Parameters used for ObjectANCFCable2D are defined in Table \ref{tab:ObjectANCFCable2D}.
+\begin{table}
+    \caption{Parameters for ObjectANCFCable2D} \label{tab:ObjectANCFCable2D}
+    \centering
+    %\begin{tabular}{@{}lrlp{0.4\textwidth}@{}} \toprule
+    \begin{tabular}{c|c} \hline
+        Parameter & Value \\ \hline 
+        physicsMassPerLength & $\rho A$\\
+        physicsBendingStiffness & $EI$\\
+        physicsAxialStiffness & $EA$\\
+        physicsBendingDamping & $dEI$\\
+        physicsAxialDamping & $dEA$\\
+        physicsReferenceAxialStrain  & $\varepsilon_{ref}$\\
+        physicsReferenceCurvature & $0$\\
+        useReducedOrderIntegration & $2$\\
+        strainIsRelativeToReference & False\\
+        visualization & (to be added...)\\ \hline
+        %\bottomrule
+    \end{tabular}
+\end{table}
+
+
+For modeling the pulley we are using ...
+
+
+For the parameter variation ...
+
+\section{Instructions for running the example}
