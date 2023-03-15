@@ -1,0 +1,19 @@
+#Exudyn implicit second order time integration sensor output file
+#measure Node number = 483
+#OutputVariableType = AngularVelocity
+#simulation started = 2022-04-08,00:48:28
+#columns contain: time, comma separated sensor values (e.g, x,y,z position coordinates)
+#number of sensor values = 3
+#Exudyn version = 1.2.34.dev1; Python3.9.11; Windows AVX2 FLOAT64
+#
+0,0,0,0
+0.001,0,0,-1.283676332e-06
+0.002,0,0,-2.444340576e-06
+0.003,0,0,-3.297055835e-06
+0.004,0,0,-4.708604561e-06
+0.005,0,0,-7.374210025e-06
+0.006,0,0,-1.275965435e-05
+0.007,0,0,-1.380715755e-05
+0.008,0,0,-1.133836533e-05
+0.009,0,0,-1.090793424e-05
+0.01,0,0,-1.180431547e-05
