@@ -1,5 +1,10 @@
-\section{Description of numerical example}
-The belt drive has two pulleys $P_1$ and $P_2$ with identical radius and inertia, see the geometrical setup in \fig{fig:ESR8_BeltDrive}. 
+\section{Description of belt drive simulation}
+The belt drive has two pulleys $P_1$ and $P_2$ with identical radius and inertia, see the geometrical setup in \fig{fig:ESR8_BeltDrive}.
+%
+The numerical modeling of the belt was based on the Absolute Nodal Coordinate Formulation (ANCF), \cite{Gerstmayr2008}. The pulleys were simulated as rigid bodies while the contact between belt and pulleys was modeled as described in \cite{Ntarladima2023}.
+
+
+%
 This numerical example is similar to the one developed in \cite{Pechstein2013} with some modifications which attempt to eliminate the vibrations in the beginning of the simulation and allow the system to reach the steady state. The angular velocity of pulley $P_1$ is prescribed by means of an algebraic constraint, while some resistance torque over time is added to pulley $P_2$, see the description hereafter.
 %++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 \begin{figure}[tbph]

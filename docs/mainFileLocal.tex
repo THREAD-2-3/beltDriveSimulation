@@ -1,5 +1,6 @@
 % put here just enough to compile it 
 \documentclass{article}
+\usepackage{xcolor}
 \usepackage[english]{babel}
 \usepackage{graphicx}
 \usepackage{docincludes}
@@ -23,33 +24,6 @@
 \definecolor{commentgreen}{rgb}{0.5,0.7,0.5}
 
 
-\usepackage{listings} %for codes
-%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-% Python style for highlighting example codes:
-\newcommand\pythonstyle{\lstset{
-language=Python,
-%basicstyle=\ttm, %ttm is not fixedspaced
-basicstyle=\ttfamily\footnotesize,
-otherkeywords={self},             % Add keywords here
-keywordstyle=\ttfamily\footnotesize\bfseries\color{deepblue},
-emph={},          % Custom highlighting
-emphstyle=\ttfamily\footnotesize\bfseries\color{deepred},    % Custom highlighting style
-stringstyle=\color{deepgreen},
-commentstyle=\color{commentgreen},
-frame=none,                         % horizontal line top and bottom
-frame=tb,                         % horizontal line top and bottom
-numbers=left,										 %show line numbers
-breaklines=true,									 %automatically breaks lines
-numberstyle=\ttfamily\footnotesize,    	% line number style
-showstringspaces=false,
-showspaces=false,
-keepspaces=true,
-tabsize=4,
-%columns=flexible, %do not add Phantom spaces at "'"
-%morestring=[b]',%not needed, standard in Python style
-%morestring=[d]',
-}}
-%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 
@@ -77,9 +51,10 @@ tabsize=4,
 \end{center}
 
 \end{titlepage}
-\input{methods.tex}
-\input{descriptionOfExample.tex}
-\input{descriptionOfCode.tex}
+\tableofcontents
+%\input{methods.tex}
+\input{descriptionOfBeltDriveSimulation.tex}
+\input{descriptionOfCode_beltDrive.tex}
 \bibliographystyle{ieeetr}
 %\typeout{}
 \bibliography{literature}

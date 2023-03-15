@@ -182,4 +182,120 @@
 
 \newcommand{\mfour}[4]{\left[\!\! \begin{array}{cccc} #1 \vspace{0.04cm}\\ #2 \vspace{0.04cm}\\ #3 \vspace{0.04cm}\\ #4 \end{array} \!\!\right]}
 
+%________________________________________________________________________
+%%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+\usepackage{listings} %for codes
+%%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+%% Python style for highlighting example codes:
+%\newcommand\pythonstyle{\lstset{
+%language=Python,
+%%basicstyle=\ttm, %ttm is not fixedspaced
+%basicstyle=\ttfamily\footnotesize,
+%otherkeywords={self},             % Add keywords here
+%keywordstyle=\ttfamily\footnotesize\bfseries\color{deepblue},
+%emph={},          % Custom highlighting
+%emphstyle=\ttfamily\footnotesize\bfseries\color{deepred},    % Custom highlighting style
+%stringstyle=\color{deepgreen},
+%commentstyle=\color{commentgreen},
+%frame=none,                         % horizontal line top and bottom
+%frame=tb,                         % horizontal line top and bottom
+%numbers=left,										 %show line numbers
+%breaklines=true,									 %automatically breaks lines
+%numberstyle=\ttfamily\footnotesize,    	% line number style
+%showstringspaces=false,
+%showspaces=false,
+%keepspaces=true,
+%tabsize=4,
+%%columns=flexible, %do not add Phantom spaces at "'"
+%%morestring=[b]',%not needed, standard in Python style
+%%morestring=[d]',
+%}}
+%%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+% Python style for highlighting example codes:
+\newcommand\pythonstyle{\lstset{
+language=Python,
+%basicstyle=\ttm, %ttm is not fixedspaced
+basicstyle=\ttfamily\small,
+otherkeywords={self},             % Add keywords here
+keywordstyle=\ttfamily\small\bfseries\color{deepblue},
+emph={AddNode, AddObject, AddMarker, AddLoad, AddSensor, SystemContainer, 
+AddSystem, Assemble, SimulationSettings,
+StartRenderer, StopRenderer, GetNodeOutput,
+DynamicSolverType, SolveDynamic, SolveStatic, 
+TimeIntegrationSolve,__init__, NumberOfSystems, Reset,
+%
+InertiaCuboid, Translated, GraphicsDataRigidLink, GraphicsDataBasis,
+AddRigidBody, AddRevoluteJoint, Info, DrawSystemGraph, SetRenderState,
+WaitForRenderEngineStopFlag, WaitForUserToContinue, LoadSolutionFile,
+SolutionViewer, PlotSensor
+},          % Custom highlighting
+emphstyle=\ttfamily\small\bfseries\color{deepred},    % Custom highlighting style
+stringstyle=\color{deepgreen},
+commentstyle=\color{commentgreen},
+frame=none,                         % horizontal line top and bottom
+%frame=tb,                         % horizontal line top and bottom
+%numbers=left,										 %show line numbers
+breaklines=true,									 %automatically breaks lines
+numberstyle=\ttfamily\small,    	% line number style
+showstringspaces=false,
+showspaces=false,
+keepspaces=true,
+tabsize=4,
+%columns=flexible, %do not add Phantom spaces at "'"
+%morestring=[b]',%not needed, standard in Python style
+%morestring=[d]',
+}}
+%plain listing style:
+\newcommand\plainlststyle{\lstset{
+language=Python,
+showstringspaces=false,
+basicstyle=\ttfamily\small,
+otherkeywords={self},             % Add keywords here
+keywordstyle=\ttfamily\small,
+emphstyle=\ttfamily\small,    % Custom highlighting style
+stringstyle=\color{deepblack},
+commentstyle=\color{deepblack},
+frame=tb,                         % Any extra options here
+showstringspaces=false,           % 
+numbers=none,										 %show line numbers
+breaklines=true,									 %automatically breaks lines
+numberstyle=\ttfamily\small,    						% line number style
+columns=flexible, %do not add Phantom spaces at "'"
+}}
+% Python for external files
+\newcommand\pythonexternal[2][]{{
+\pythonstyle
+\lstinputlisting[#1]{#2}}}
+
+\newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
+
+
+\definecolor{steelblue}{HTML}{307BD0}
+
+\definecolor{termblue}{rgb}{0.1,0.1,0.8}
+\definecolor{termred}{rgb}{0.8,0.1,0.1}
+\definecolor{termgreen}{rgb}{0,0.65,0}
+
+%colored terms in equations:
+\newcommand{\termA}[1]{\textcolor{termblue}{#1}}
+\newcommand{\termB}[1]{\textcolor{termred}{#1}}
+\newcommand{\termC}[1]{\textcolor{termgreen}{#1}}
+
+
+\newcommand{\bigmr}[9]{\left[\!\! \begin{array}{ccc} \displaystyle #1 & \displaystyle #2 & \displaystyle #3 \vspace{0.3cm}\\ \displaystyle #4 & \displaystyle #5 & \displaystyle #6 \vspace{0.3cm}\\ \displaystyle #7 & \displaystyle #8 & \displaystyle #9  \end{array} \!\!\right]}
+
+
+
+\newcommand{\ignoreRST}[1]{#1} %parts of docu that cannot be converted to .rst
+\newcommand{\onlyRST}[1]{} %parts of docu that are only visible in .rst file
+
+
+%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+%%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+%________________________________________________________________________
+
+
 \endinput %for .sty files
