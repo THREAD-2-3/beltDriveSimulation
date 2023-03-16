@@ -8,13 +8,7 @@
 \newcommand{\eqDot}{\; .} %dot at end of equations
 \newcommand{\eqComma}{\; ,} %comma at end of equations
 
-%\newcommand{\exuUrl}[2]{\href{#1}{\underline{#2}}} %\exuUrl{github.com}{link to github}
-%\newcommand{\refSection}[1]{\hyperref[#1]{\underline{Section \ref*{#1}}}} %see \refSection{sec_label}
-%\newcommand{\refChapter}[1]{\hyperref[#1]{\underline{Chapter \ref*{#1}}}} %see \refSection{sec_label}
-
 %for acronyms:
-%\newcommand{\hac}[1]{\hyperref[sec:abbreviations]{\ac{#1}}} %acronym with hyperlink
-%\newcommand{\hacs}[1]{\hyperref[sec:abbreviations]{\acs{#1}}} %short acronym with hyperlink
 \newcommand{\hac}[1]{\ac{#1}} %change of ac allows to modify it in future
 \newcommand{\hacs}[1]{\acs{#1}} %short acronym; change of acs allows to modify it in future
 
@@ -131,8 +125,8 @@
 
 \newcommand{\tp}{^\mathrm{T}} %transpose
 
-\newcommand{\diag}{\mathrm{diag}} %transpose
-\renewcommand{\vec}{\mathrm{vec}} %transpose
+\newcommand{\diag}{\mathrm{diag}} 
+\renewcommand{\vec}{\mathrm{vec}} 
 
 \newcommand{\Null}{\mathbf{0}}
 
@@ -187,34 +181,6 @@
 \usepackage{listings} %for codes
 %%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 %% Python style for highlighting example codes:
-%\newcommand\pythonstyle{\lstset{
-%language=Python,
-%%basicstyle=\ttm, %ttm is not fixedspaced
-%basicstyle=\ttfamily\footnotesize,
-%otherkeywords={self},             % Add keywords here
-%keywordstyle=\ttfamily\footnotesize\bfseries\color{deepblue},
-%emph={},          % Custom highlighting
-%emphstyle=\ttfamily\footnotesize\bfseries\color{deepred},    % Custom highlighting style
-%stringstyle=\color{deepgreen},
-%commentstyle=\color{commentgreen},
-%frame=none,                         % horizontal line top and bottom
-%frame=tb,                         % horizontal line top and bottom
-%numbers=left,										 %show line numbers
-%breaklines=true,									 %automatically breaks lines
-%numberstyle=\ttfamily\footnotesize,    	% line number style
-%showstringspaces=false,
-%showspaces=false,
-%keepspaces=true,
-%tabsize=4,
-%%columns=flexible, %do not add Phantom spaces at "'"
-%%morestring=[b]',%not needed, standard in Python style
-%%morestring=[d]',
-%}}
-%%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-
-
-% Python style for highlighting example codes:
 \newcommand\pythonstyle{\lstset{
 language=Python,
 %basicstyle=\ttm, %ttm is not fixedspaced
@@ -257,7 +223,10 @@ otherkeywords={self},             % Add keywords here
 keywordstyle=\ttfamily\small,
 emphstyle=\ttfamily\small,    % Custom highlighting style
 stringstyle=\color{deepblack},
-commentstyle=\color{deepblack},
+%commentstyle=\color{deepblack},
+emph={},          % Custom highlighting
+emphstyle=\ttfamily\footnotesize\bfseries\color{deepred},    % Custom highlighting style
+commentstyle=\color{commentgreen},
 frame=tb,                         % Any extra options here
 showstringspaces=false,           % 
 numbers=none,										 %show line numbers
@@ -296,6 +265,6 @@ columns=flexible, %do not add Phantom spaces at "'"
 %++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 %%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 %________________________________________________________________________
-
+\newcommand{\exuUrl}[2]{\href{#1}{\underline{#2}}} % added for url
 
 \endinput %for .sty files
