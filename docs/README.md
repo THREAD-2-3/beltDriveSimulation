@@ -1,1 +1,1 @@
-The main file can be compiled but all other subsections are just to be added for the mainFile so that it can be added all together in one Latex. 
+Subsections, e.g. descriptionOfCode_beltDrive, will be imported to the global main file. Therefore all text is added to subsections and not to the local main file. The local main file is only used for compiling the files locally. 
