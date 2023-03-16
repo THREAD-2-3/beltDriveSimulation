@@ -686,9 +686,9 @@ def ParameterFunction(parameterSet):
 #%%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # Section 7: Select single simulation or variation. 
 #              Values for parameter variations are defined here.   
-performVariation = True
-performSingleSimulation = False
-performPlots = True #and not performVariation ## CHECK!!
+performVariation = False
+performSingleSimulation = True
+performPlots = False #and not performVariation ## CHECK!!
 
 if __name__ == '__main__': #include this to enable parallel processing
     from exudyn.processing import ParameterVariation, ProcessParameterList
