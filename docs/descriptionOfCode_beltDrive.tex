@@ -3,23 +3,65 @@ For simulating the system we are using the multibody dynamics code Exudyn \cite{
 %
 The code in divided into sections (1, 2,…, 8) and subsections (A, B, …) for easier documenting and processing, see section 3 with subsections (A, B, ..., E):
 \bi 
-\item{In section 1 we import necessary modules.}
-\item{Section 2 creates a multibody system, mbs.}
-\item{The third section consists of the Parameter Function. This function will be repeatedly called from Parameter Variation to update the value of the variables for which we perform variations.} 
-\item{In subsection 3.A we create a class P which contains all parameters for which we can perform Parameter variations. First the parameters are given their default values. Then through:
+\item{In section 1, we import necessary modules.}
+\item{Section 2 creates a multibody system, \pythoninline{mbs}.}
+\item{Section 3 consists of the Parameter Function. This function will be repeatedly called from Parameter Variation to update the value of the variables for which we perform variations.} 
+\bi
+\item{
+%In subsection 3.A 
+We create a class \pythoninline{P} which contains all parameters for which we can perform Parameter variations, see \mytab{tab_dafaultValues}. First the parameters are given their default values, see Table \ref{tab_dafaultValues}. Then we update the values of varying parameters through:
 \pythonstyle
 \begin{lstlisting}
 	for key,value in parameterSet.items():
 		setattr(P,key,value)
 \end{lstlisting}		
-we updated the varying parameters.}
-\item{In subsection 3.B we create the model which is going to be updated for every parameter variation.}
+where \pythoninline{setattr()} is a Python function which sets the value of the attribute of an object.}
 %
-\item{...}
+\begin{table}
+    \caption{Default values for parameters} \label{tab_dafaultValues}
+    \centering
+    \begin{tabular}{c|c|c|c|c} \hline
+        %\multicolumn{4}{c}{Nominal simulation parameters} \\ \hline 
+        Par. & Value & Units & Description & Name in code \\ \hline 
+        $t_{end} $ & 
+            $2.45$ & \si{\second} &
+            evaluation time & \pythoninline{P.tEnd}\\
+        $\mu$ & 
+            $0.5$ & - &
+            dry friction coefficient & \pythoninline{P.dryFriction} \\
+        $n_e$ & 
+            $240$ & - & 
+            number of elements & \pythoninline{P.nANCFnodes}\\
+        $dt$ & 
+            $5 \cdot 10^{-5}$ & \si{\second}  & 
+            time step size & \pythoninline{P.stepSize} \\
+        $n_{seg}$ & 4 & - & number of segments &\pythoninline{P.nSegments} \\    
+        $k_c$ & 
+            $4 \cdot 10^9$ &  \si{\newton \per \meter^3} &  normal contact stiffness & \pythoninline{contactStiffness} 
+            \\
+        $\mu_k$ & 
+            $5 \cdot 10^9$ &  \si{\newton \per \meter^3} &  tangential contact stiffness & \pythoninline{frictionStiffness}
+            \\
+        $d_c$ & 
+            $8 \cdot 10^4$ &  \si{\newton \second \per \meter^3 }&  normal contact damping & \pythoninline{contactDamping}
+            \\
+        $\mu_v$ & 
+            $ \sqrt{m_{seg} \mu_k} \approx $ &  \si{\newton \second \per \meter^3 } &  tangential contact velocity penalty & \pythoninline{frictionVelocityPenalty}
+            \\
+            &$3.22\cdot 10^6$ & & &
+            \\ \hline
+    \end{tabular}
+\end{table}
 %
-\item{For the ANCF beam elements modeling the belt we are using ObjectANCFCable2D, see the documentation of Exudyn\footnote{https://github.com/jgerstmayr/EXUDYN}, theDoc.
-Parameters used for ObjectANCFCable2D are defined in Table \ref{tab:ObjectANCFCable2D}.}
-\item{For prescribing the angular velocity, we are using a user function
+\item{
+%In subsection 3.B 
+We create the model with respect to the parameter values given in  \mytab{tab_beltdriveParameters}}. % which is going to be updated for every parameter variation.}
+%
+%\item{...}
+%
+\item{For the ANCF beam elements modeling the belt we are using \pythoninline{ObjectANCFCable2D}, see the documentation of Exudyn\footnote{https://github.com/jgerstmayr/EXUDYN}, theDoc.
+Parameters used for \pythoninline{ObjectANCFCable2D} are defined in Table \ref{tab_ObjectANCFCable2D}.}
+\item{For prescribing the angular velocity, we are using the following user function:
 \pythonstyle
 \begin{lstlisting}
 def UFvelocityDrive(mbs, t, itemNumber, lOffset): 
@@ -32,30 +74,33 @@ def UFvelocityDrive(mbs, t, itemNumber, lOffset):
 	return v
 \end{lstlisting}                
 }
-\item{In section 7 one can choose between performing single simulation and performing parameter variation.
+\ei
+\item{In section 4, simulation settings and visualization settings are defined.}
+\item{In section 5, we perform the static and dynamic equilibrium.}
+\item{In section 6, the obtained results are post-processed and saved in files.}
+\item{In section 7, one can choose between performing single simulation and performing parameter variation.
 An option for plotting figures is given. Solutions for parameters variations were stored in solution folder. Solutions from new runs are stored by default in solutionNosync.} %How to use underscore in the text?
+\item{In section 8, saved results are plotted. Labels are generated. Cases given in \pythoninline{iCases} = $[1,..., 4]$ correspond to different varying quantities.}
 %
 \begin{table}
-    \caption{Parameters for ObjectANCFCable2D} \label{tab:ObjectANCFCable2D}
+    \caption{Input for ObjectANCFCable2D} \label{tab_ObjectANCFCable2D}
     \centering
     %\begin{tabular}{@{}lrlp{0.4\textwidth}@{}} \toprule
     \begin{tabular}{c|c} \hline
-        Parameter & Value \\ \hline 
-        physicsMassPerLength & $\rho A$\\
-        physicsBendingStiffness & $EI$\\
-        physicsAxialStiffness & $EA$\\
-        physicsBendingDamping & $dEI$\\
-        physicsAxialDamping & $dEA$\\
-        physicsReferenceAxialStrain  & $\varepsilon_{ref}$\\
-        physicsReferenceCurvature & $0$\\
-        useReducedOrderIntegration & $2$\\
-        strainIsRelativeToReference & False\\
-        visualization & (to be added...)\\ \hline
+        Input & Value \\ \hline 
+        \pythoninline{physicsMassPerLength} & $\rho A$\\
+        \pythoninline{physicsBendingStiffness} & $EI$\\
+        \pythoninline{physicsAxialStiffness} & $EA$\\
+        \pythoninline{physicsBendingDamping} & $dEI$\\
+        \pythoninline{physicsAxialDamping} & $dEA$\\
+        \pythoninline{physicsReferenceAxialStrain}  & $\varepsilon_{ref}$\\
+        \pythoninline{physicsReferenceCurvature} & $0$\\
+        \pythoninline{useReducedOrderIntegration} & $2$\\
+        \pythoninline{strainIsRelativeToReference} & False\\ \hline
         %\bottomrule
     \end{tabular}
 \end{table}
 \ei
-(The file is still under construction.)
 \section{Installation and running}
 \subsection{Installing python and Exudyn}
 The code was tested in a Windows pc using Anaconda, 64bit, Python 3.7.6 and Spyder 4.0.1 which is included in the Anaconda installation.
@@ -93,7 +138,3 @@ Two python files are added in src folder. One for performing the belt drive simu
  
 For running these files the first option is to open an Anaconda prompt and copy paste the file location.
 The second option is to use Spyder and should be selected for making modifications in the code. 
-
-
-
-(The file is still under construction.)

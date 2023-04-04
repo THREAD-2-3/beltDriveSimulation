@@ -15,23 +15,23 @@ This numerical example is similar to the one developed in \cite{Pechstein2013} w
 \end{figure}
 %++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 \begin{table}[tbph]
-    \caption{Main parameters for the belt drive.} \label{tab:reeving_system_parameters1}
+    \caption{Main parameters for the belt drive.} \label{tab_beltdriveParameters}
     \centering
     %\begin{tabular}{@{}lrlp{0.4\textwidth}@{}} \toprule
-    \begin{tabular}{c|c|c|c} \hline
-        Parameter & Value & Units & Description \\ \hline 
+    \begin{tabular}{c|c|c|c|c} \hline
+        Par. & Value & Units & Description & Names in code\\ \hline 
         $r$ & 
             $0.09995$ & \si{\meter} &
-            pulley radius  \\
+            pulley radius & \pythoninline{radiusPulley} \\
         $d$ & 
             $0.1 \pi$ & \si{\meter} &
-            distance between two pulleys \\
+            distance between two pulleys & \pythoninline{distancePulleys} \\
         $h_b$ & 
             $0.0001$ & \si{\meter} & 
-            belt height \\
+            belt height &\pythoninline{hc} \\
         $w_b$ & 
             $0.08$ & \si{\meter}  & 
-            belt width \\
+            belt width &\pythoninline{b} \\
         $\bar l_b$ & 
             $0.38 \pi$ &  \si{\meter} &  stress-free belt length
             \\
@@ -40,60 +40,66 @@ This numerical example is similar to the one developed in \cite{Pechstein2013} w
             initial, deformed belt length\\
         $\varepsilon_{ref}$ & 
             $-0.05$ &  - &
-            added reference axial strain of the belt\\% (causing pre-tension)\\
-        $u_0$ & 
-            $0.$ & \si{\meter} &
-            horizontal displacement (used only in original model \cite{Pechstein2013})\\
+            added reference axial strain %of the belt
+             & \pythoninline{preStretch}\\% (causing pre-tension)\\
+%        $u_0$ & 
+%            $0.$ & \si{\meter} &
+%            horizontal displacement (used only in original model \cite{Pechstein2013})\\
  %       $E$ & 
 %            $10^7$ & \si{\newton \per \meter \squared} &
  %           Young's modulus \\
         $EA$ & 
             $8000$ & \si{\newton \meter} &
-            axial stiffness \\ 
+            axial stiffness & \pythoninline{EA} \\ 
         $EI$ & 
             $\frac{4}{3} \cdot 10^{-3} $ & \si{\newton \meter \squared} &
-            bending stiffness \\             
+            bending stiffness & \pythoninline{EI}\\             
         $\rho$ & 
             $1036$ & \si{\kilogram \per \meter ^3}&
-            beam density \\
+            beam density & \pythoninline{rhoA}\\
         $dEA$ & 
             $1$ & \si{\newton \per {\meter \second}\squared} &
-            strain proportional damping \\ 
+            strain proportional damping & \pythoninline{dEA} \\ 
         $\omega_{P1}$ & 
             $12$ & rad \si{\per \second} & 
-            angular velocity of driving pulley \\
+            angular velocity of $P_1$ & \pythoninline{omegaFinal}\\
         $d_{P2}$ & 
             $2$ & \si{\newton \meter \per {\second}} &
-            angular velocity proportional damping at pulley $P_2$ \\ 
+            %angular velocity proportional 
+            damping at $P_2$ & \pythoninline{rotationDampingWheels}\\ 
         $t_0$ & 
             $0.05$ & \si{\second} & 
-            driving start time  \\
+            driving start time & \pythoninline{tAccStart}  \\
         $t_1$ & 
             $0.60$ & \si{\second} & 
-            driving end time \\
+            driving end time & \pythoninline{tAccEnd} \\
         $t_{\tau 0}$ & 
             $1.0$ & \si{\second} & 
-            torque $\tau_{P2}$ raised at pulley $P_2$  \\
+            torque $\tau_{P2}$ starts
+            %raised at pulley $P_2$  
+            &\pythoninline{tTorqueStart} \\
         $t_{\tau 1}$ & 
             $1.5$ & \si{\second} & 
-            torque $\tau_{P2}$ at pulley $P_2$ reaches nominal value\\
+            torque $\tau_{P2}$
+            % at pulley $P_2$ 
+            reaches nominal value & \pythoninline{tTorqueEnd}\\
         $I_p$ & 
             $0.25$ & \si{\kilo\gram \per \meter \squared} & 
-            moment of inertia of  pulleys \\
+            moment of inertia of  pulleys & \pythoninline{wheelInertia} \\
         %$\mu$ & 
             %$0.5$ & - & 
             %friction coefficient \\
         %$c_c$ & 
             %$4\cdot 10^9$ & \si{\newton \per \meter ^3} & 
             %contact stiffness \\
-        $g$ & 9.81 & \si{\meter \per \second \squared} & gravity  
+        $g$ & 9.81 & \si{\meter \per \second \squared} & gravity & \pythoninline{gVec}
  \\ \hline
         %\bottomrule
     \end{tabular}
 \end{table}
 %++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 %++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-The belt is modeled as Bernoulli-Euler beam with bending stiffness $EI$, axial stiffness $EA$, rectangular cross section with height $h_b$ and width $w_b$, as well as stretch proportional damping, density, and further parameters given in \mytab{tab:reeving_system_parameters1}.
+The belt is modeled as Bernoulli-Euler beam with bending stiffness $EI$, axial stiffness $EA$, rectangular cross section with height $h_b$ and width $w_b$, as well as stretch proportional damping, density, and further parameters given in \mytab{tab_beltdriveParameters}.
 A constant acceleration is prescribed to pulley $P_1$ between $t_0$ and $t_1$:
 \be \label{eq:ESR8_torqueP2}
   \omega_{P1}(t) = \begin{cases} 0\,\frac{\si{\radian}}{\si{\second}},\quad \quad \quad \quad \quad \quad \quad \quad \quad \quad\,\;\;\mathrm{if} \quad t < t_{0} \\

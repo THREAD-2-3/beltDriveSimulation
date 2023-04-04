@@ -132,6 +132,8 @@ def ParameterFunction(parameterSet):
     tAccStart = 0.05
     tAccEnd = 0.6
     omegaFinal = 12
+    tTorqueStart = 1.
+    tTorqueEnd = 1.5
     #%%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     # Parameters for the contact     
     useFriction = True
@@ -151,7 +153,7 @@ def ParameterFunction(parameterSet):
     
     initialDisplacement0 = 0
     radiusPulley = 0.09995
-    positionPulley2x = 0.1*pi
+    distancePulleys = 0.1*pi
     initialDistance = positionPulley2x 
     preStretch = -0.05
           
@@ -159,7 +161,7 @@ def ParameterFunction(parameterSet):
     # Add belt
     # Create geometry:
     circleList = [[[initialDisplacement0,0], radiusPulley,'L'],
-                  [[positionPulley2x,0], radiusPulley,'L'],]
+                  [[distancePulleys,0], radiusPulley,'L'],]
     
     reevingDict = CreateReevingCurve(circleList, drawingLinesPerCircle = 64, 
                                     radialOffset=0.5*hc, closedCurve=True, 
@@ -372,7 +374,8 @@ def ParameterFunction(parameterSet):
                     #this is used for times > 1 in order to see influence of torque step in Wheel1
                     def UFforce(mbs, t, load):
                         tau = 0.
-                        tau +=  25.*(SmoothStep(t, 1., 1.5, 0., 1.) - SmoothStep(t, 3.5, 4., 0., 1.))
+
+                        tau +=  25.*(SmoothStep(t, tTorqueStart, tTorqueEnd, 0., 1.) - SmoothStep(t, 3.5, 4., 0., 1.))
                         return -tau
                     
                     loadPulley1 = mbs.AddLoad(LoadCoordinate(markerNumber=mCoordinateWheel,
