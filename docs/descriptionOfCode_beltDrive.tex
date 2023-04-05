@@ -92,7 +92,7 @@ def UFvelocityDrive(mbs, t, itemNumber, lOffset):
 \end{table}
 \item{For the ANCF beam elements modeling the belt we are using \pythoninline{ObjectANCFCable2D}, see the documentation of Exudyn\footnote{https://github.com/jgerstmayr/EXUDYN}, theDoc.
 The input of \pythoninline{ObjectANCFCable2D} is given in \mytab{tab_ObjectANCFCable2D}.}
-\item{During the simulation we measure the angular velocity and torque for both pulleys over time,as well as, the axial velocity, the tangential contact stresses, the normal contact stresses and the axial forces over the length of the belt. For this we use \pythoninline{mbs.AddSensor()}. For saving the solution in a different file for each parameter variation we name the solution files using a string which is generated according to the used values for the parameters which can vary:
+\item{During the simulation we measure the angular velocity and torque for both pulleys over time, as well as, the axial velocity, the tangential contact stresses, the normal contact stresses and the axial forces over the length of the belt. For this we use \pythoninline{mbs.AddSensor()}. For saving the solution in a different file for each parameter variation we name the solution files using a string which is generated according to the used values for the parameters which can vary:
 \pythonstyle
 \begin{lstlisting}
     fileClassifier  = ''
