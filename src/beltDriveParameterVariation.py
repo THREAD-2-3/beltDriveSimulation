@@ -429,29 +429,7 @@ def ParameterFunction(parameterSet):
                                                             outputVariableType=exu.OutputVariableType.Coordinates))]
     #++++++++++++++++++++++++++++++++++++++++++++++            
     #++++++++++++++++++++++++++++++++++++++++++++++       
-            
-    
-    
-    #user function to smoothly transform from curved to straight reference configuration as
-    #in paper 2013, Pechstein, Gerstmayr
-    def PreStepUserFunction(mbs, t):
-    
-        if True and t <= tAccStart+1e-10:
-            cableList = ancf[1]
-            fact = (tAccStart-t)/tAccStart #from 1 to 0
-            if fact < 1e-12: fact = 0. #for very small values ...
-            #curvatures = reevingDict['elementCurvatures']
-            #print('fact=', fact)
-            for i in range(len(cableList)):
-                oANCF = cableList[i]
-                mbs.SetObjectParameter(oANCF, 'strainIsRelativeToReference', 
-                                       fact)
-                mbs.SetObjectParameter(oANCF, 'physicsReferenceAxialStrain', 
-                                        preStretch*(1.-fact))
-    
-        
-        return True
-    
+               
     
     mbs.Assemble()
     
@@ -556,8 +534,7 @@ def ParameterFunction(parameterSet):
         mbs.SetObjectParameter(velControl, 'activeConnector', True)
         for csd in wheelSprings:
             mbs.SetObjectParameter(csd, 'activeConnector', False)
-    else:
-        mbs.SetPreStepUserFunction(PreStepUserFunction)
+
     
     exu.SolveDynamic(mbs, simulationSettings, solverType=exu.DynamicSolverType.TrapezoidalIndex2) #183 Newton iterations, 0.114 seconds
 

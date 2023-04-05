@@ -1,7 +1,7 @@
 \section{Description of code}
-For simulating the system we are using the multibody dynamics code Exudyn \cite{Gerstmayr2022}.
+For simulating the system we are using the multibody dynamics code Exudyn \cite{Gerstmayr2022}, see the documentation of Exudyn\footnote{https://github.com/jgerstmayr/EXUDYN}.
 %
-The code in divided into sections (1, 2,…, 8) and subsections (A, B, …) for easier documenting and processing, see section 3 with subsections (A, B, ..., E):
+The \exuUrl{https://github.com/THREAD-2-3/beltDriveSimulation/blob/main/src/beltDriveParameterVariation.py}{code} is divided into sections (1, 2,…, 8) and subsections (A, B, …) for easier documenting and processing: %, see section 3 with subsections (A, B, ..., E):
 \bi 
 \item{In section 1, we import necessary modules.}
 \item{Section 2 creates a multibody system, \pythoninline{mbs}.}
@@ -9,7 +9,7 @@ The code in divided into sections (1, 2,…, 8) and subsections (A, B, …) for 
 \bi
 \item{
 %In subsection 3.A 
-We create a class \pythoninline{P} which contains all parameters for which we can perform Parameter variations, see \mytab{tab_dafaultValues}. First the parameters are given their default values, see Table \ref{tab_dafaultValues}. Then we update the values of varying parameters through:
+We create a class \pythoninline{P} which contains all parameters for which we can perform Parameter variations. First the parameters are given their default values, see \mytab{tab_dafaultValues}. Then we update the values of varying parameters through:
 \pythonstyle
 \begin{lstlisting}
 	for key,value in parameterSet.items():
@@ -37,10 +37,10 @@ where \pythoninline{setattr()} is a Python function which sets the value of the 
             time step size & \pythoninline{P.stepSize} \\
         $n_{seg}$ & 4 & - & number of segments &\pythoninline{P.nSegments} \\    
         $k_c$ & 
-            $4 \cdot 10^9$ &  \si{\newton \per \meter^3} &  normal contact stiffness & \pythoninline{contactStiffness} 
+            $4 \cdot 10^9$ &  \si{\newton \per \meter^3} &  normal contact stiffness & \pythoninline{P.contactStiffnessPerArea *40} 
             \\
         $\mu_k$ & 
-            $5 \cdot 10^9$ &  \si{\newton \per \meter^3} &  tangential contact stiffness & \pythoninline{frictionStiffness}
+            $5 \cdot 10^9$ &  \si{\newton \per \meter^3} &  tangential contact stiffness & \pythoninline{P.frictionStiffnessPerArea}
             \\
         $d_c$ & 
             $8 \cdot 10^4$ &  \si{\newton \second \per \meter^3 }&  normal contact damping & \pythoninline{contactDamping}
@@ -59,8 +59,6 @@ We create the model with respect to the parameter values given in  \mytab{tab_be
 %
 %\item{...}
 %
-\item{For the ANCF beam elements modeling the belt we are using \pythoninline{ObjectANCFCable2D}, see the documentation of Exudyn\footnote{https://github.com/jgerstmayr/EXUDYN}, theDoc.
-Parameters used for \pythoninline{ObjectANCFCable2D} are defined in Table \ref{tab_ObjectANCFCable2D}.}
 \item{For prescribing the angular velocity, we are using the following user function:
 \pythonstyle
 \begin{lstlisting}
@@ -74,15 +72,7 @@ def UFvelocityDrive(mbs, t, itemNumber, lOffset):
 	return v
 \end{lstlisting}                
 }
-\ei
-\item{In section 4, simulation settings and visualization settings are defined.}
-\item{In section 5, we perform the static and dynamic equilibrium.}
-\item{In section 6, the obtained results are post-processed and saved in files.}
-\item{In section 7, one can choose between performing single simulation and performing parameter variation.
-An option for plotting figures is given. Solutions for parameters variations were stored in solution folder. Solutions from new runs are stored by default in solutionNosync.} %How to use underscore in the text?
-\item{In section 8, saved results are plotted. Labels are generated. Cases given in \pythoninline{iCases} = $[1,..., 4]$ correspond to different varying quantities.}
-%
-\begin{table}
+\begin{table}[hbt!]
     \caption{Input for ObjectANCFCable2D} \label{tab_ObjectANCFCable2D}
     \centering
     %\begin{tabular}{@{}lrlp{0.4\textwidth}@{}} \toprule
@@ -100,18 +90,61 @@ An option for plotting figures is given. Solutions for parameters variations wer
         %\bottomrule
     \end{tabular}
 \end{table}
+\item{For the ANCF beam elements modeling the belt we are using \pythoninline{ObjectANCFCable2D}, see the documentation of Exudyn\footnote{https://github.com/jgerstmayr/EXUDYN}, theDoc.
+The input of \pythoninline{ObjectANCFCable2D} is given in \mytab{tab_ObjectANCFCable2D}.}
+\item{During the simulation we measure the angular velocity and torque for both pulleys over time,as well as, the axial velocity, the tangential contact stresses, the normal contact stresses and the axial forces over the length of the belt. For this we use \pythoninline{mbs.AddSensor()}. For saving the solution in a different file for each parameter variation we name the solution files using a string which is generated according to the used values for the parameters which can vary:
+\pythonstyle
+\begin{lstlisting}
+    fileClassifier  = ''
+    fileClassifier += '-tt'+str(int(P.tEnd*100))
+    fileClassifier += '-hh'+str(int(P.stepSize/1e-6))
+    fileClassifier += '-nn'+str(int(P.nANCFnodes/60))
+    fileClassifier += '-ns'+str(P.nSegments)
+    fileClassifier += '-cs'+str(int((P.contactStiffnessPerArea/1e7)))
+    fileClassifier += '-fs'+str(int((P.frictionStiffnessPerArea/1e7)))
+    fileClassifier += '-df'+str(int(P.dryFriction*10))
+    fileClassifier += '-' 
+\end{lstlisting} 
+For example, for measuring and saving the torque applied to $P_1$ we use:
+\pythonstyle
+\begin{lstlisting}
+ sTorquePulley0 = mbs.AddSensor(SensorObject(objectNumber=velControl, fileName=fileDir+'torquePulley0'+fileClassifier+'.txt',outputVariableType=exu.OutputVariableType.Force))
+\end{lstlisting}
+}    
+\ei
+\item{In section 4, simulation settings and visualization settings are defined.}
+\item{In section 5, we perform the static and dynamic simulation. %Some parameters such as \pythoninline{frictionCoefficient}, \pythoninline{frictionStiffness} should be given different values during the static simulation. 
+We use \pythoninline{mbs.SetObjectParameter} to change objects' parameters after \pythoninline{mbs.Assemble}. This allows us to change the value of some parameters such as \pythoninline{frictionCoefficient}, \pythoninline{frictionStiffness} during the static simulation and to activate or deactivate constrains before and after the static simulation.
+For example, before the static simulation we deactivate the constraint which is used for prescribing the angular velocity, \pythoninline{velControl}, by:
+\pythonstyle
+\begin{lstlisting}
+mbs.SetObjectParameter(velControl, 'activeConnector', False)
+\end{lstlisting} 
+After the static simulation we activate it again.
+Note also that we set \pythoninline{updateInitialValues=True} in 
+\pythonstyle
+\begin{lstlisting}
+exu.SolveStatic(mbs, simulationSettings, updateInitialValues=True) 
+\end{lstlisting}
+which allows us to use the static solution as the initial solution for the dynamic simulation.}
+\item{In section 6, the obtained results are post-processed and saved in files.}
+\item{In section 7, one can choose between performing single simulation and performing parameter variation.
+The option for plotting figures can be chosen as well. All solutions from parameter variations have already been added in \exuUrl{https://github.com/THREAD-2-3/beltDriveSimulation/tree/main/src/solution}{the solution folder}. Solutions from new runs are stored by default in solutionNosync.} %How to use underscore in the text?
+\item{In section 8, stored results are plotted. Cases given in \pythoninline{iCases} = $[1,..., 4]$ correspond to different varying quantities; number of elements, step size, other quantities (number of segments, normal contact stiffness, tangential contact stiffness, dry friction coefficient) and evaluation time.}
+%
+
 \ei
 \section{Installation and running}
-\subsection{Installing python and Exudyn}
+\subsection{Installing Python and Exudyn}
 The code was tested in a Windows pc using Anaconda, 64bit, Python 3.7.6 and Spyder 4.0.1 which is included in the Anaconda installation.
 
-For installing Exudyn PIP INSTALLER (pypi.org) was used based on the following instructions:
+Exudyn was installed using PIP INSTALLER (pypi.org).
 %In order to install Exudyn using pip installer:
 Pre-built versions of Exudyn are hosted on \texttt{pypi.org}, see the project
 \bi
  \item \exuUrl{https://pypi.org/project/exudyn}{https://pypi.org/project/exudyn}
 \ei
-As with most other packages, in the regular case (if your binary has been pre-built) you just need to do\footnote{If the index of pypi is not updated, it may help to use \texttt{pip install -i https://pypi.org/project/ exudyn} }
+For installing Exudyn using pip, as with most other packages, in the regular case (if your binary has been pre-built) you just need to do\footnote{If the index of pypi is not updated, it may help to use \texttt{pip install -i https://pypi.org/project/ exudyn} }
 \bi
   \item[] \texttt{pip install exudyn}
 \ei
