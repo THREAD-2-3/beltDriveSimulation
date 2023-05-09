@@ -1,7 +1,7 @@
 \subsection{Description of code}
-For simulating the system we are using the multibody dynamics code Exudyn \cite{Gerstmayr2022}, see the documentation of Exudyn\footnote{https://github.com/jgerstmayr/EXUDYN}.
+For simulating the system we are using the multibody dynamics code Exudyn \cite{Exudyn2023}, see also the GitHub repository of Exudyn\footnote{https://github.com/jgerstmayr/EXUDYN}.
 %
-The \exuUrl{https://github.com/THREAD-2-3/beltDriveSimulation/blob/main/src/beltDriveParameterVariation.py}{code} is divided into sections (1, 2,..., 8) and subsections (A, B, ...) for easier documenting and processing: %, see section 3 with subsections (A, B, ..., E):
+The code\footnote{\url{https://github.com/THREAD-2-3/beltDriveSimulation/blob/main/src/beltDriveParameterVariation.py}} is divided into sections (1, 2,..., 8) and subsections (A, B, ...) for easier documenting and processing: %, see section 3 with subsections (A, B, ..., E):
 \bi 
 \item{In section 1, we import necessary modules.}
 \item{Section 2 creates a multibody system, \pythoninline{mbs}.}
@@ -11,13 +11,13 @@ The \exuUrl{https://github.com/THREAD-2-3/beltDriveSimulation/blob/main/src/belt
 %In subsection 3.A 
 We create a class \pythoninline{P} which contains all parameters for which we can perform Parameter variations. First the parameters are given their default values, see \mytab{tab_dafaultValues}. Then we update the values of varying parameters through:
 \pythonstyle
-\begin{lstlisting}
-	for key,value in parameterSet.items():
-		setattr(P,key,value)
-\end{lstlisting}		
+\begin{tcolorbox}\begin{lstlisting}
+for key,value in parameterSet.items():
+  setattr(P,key,value)
+\end{lstlisting}\end{tcolorbox}		
 where \pythoninline{setattr()} is a Python function which sets the value of the attribute of an object.}
 %
-\begin{table}
+\begin{table}[btp!]
     \caption{Default values for parameters} \label{tab_dafaultValues}
     \centering
     \begin{tabular}{c|c|c|c|c} \hline
@@ -61,7 +61,7 @@ We create the model with respect to the parameter values given in  \mytab{tab_be
 %
 \item{For prescribing the angular velocity, we are using the following user function:
 \pythonstyle
-\begin{lstlisting}
+\begin{tcolorbox}\begin{lstlisting}
 def UFvelocityDrive(mbs, t, itemNumber, lOffset): 
 	if t < tAccStart:  # driving start time
 		v = 0
@@ -70,9 +70,9 @@ def UFvelocityDrive(mbs, t, itemNumber, lOffset):
 	elif t >= tAccEnd:
 		v = omegaFinal
 	return v
-\end{lstlisting}                
+\end{lstlisting}\end{tcolorbox}
 }
-\begin{table}[hbt!]
+\begin{table}[btp!]
     \caption{Input for ObjectANCFCable2D} \label{tab_ObjectANCFCable2D}
     \centering
     %\begin{tabular}{@{}lrlp{0.4\textwidth}@{}} \toprule
@@ -90,26 +90,26 @@ def UFvelocityDrive(mbs, t, itemNumber, lOffset):
         %\bottomrule
     \end{tabular}
 \end{table}
-\item{For the ANCF beam elements modeling the belt we are using \pythoninline{ObjectANCFCable2D}, see the documentation of Exudyn\footnote{https://github.com/jgerstmayr/EXUDYN}, theDoc.
+\item{For the ANCF beam elements modeling the belt we are using \pythoninline{ObjectANCFCable2D}, see the documentation\footnote{\texttt{theDoc.pdf}: \url{https://github.com/jgerstmayr/EXUDYN/blob/master/docs/theDoc/theDoc.pdf}} of Exudyn \cite{Exudyn2023}.
 The input of \pythoninline{ObjectANCFCable2D} is given in \mytab{tab_ObjectANCFCable2D}.}
 \item{During the simulation we measure the angular velocity and torque for both pulleys over time, as well as, the axial velocity, the tangential contact stresses, the normal contact stresses and the axial forces over the length of the belt. For this we use \pythoninline{mbs.AddSensor()}. For saving the solution in a different file for each parameter variation we name the solution files using a string which is generated according to the used values for the parameters which can vary:
 \pythonstyle
-\begin{lstlisting}
-    fileClassifier  = ''
-    fileClassifier += '-tt'+str(int(P.tEnd*100))
-    fileClassifier += '-hh'+str(int(P.stepSize/1e-6))
-    fileClassifier += '-nn'+str(int(P.nANCFnodes/60))
-    fileClassifier += '-ns'+str(P.nSegments)
-    fileClassifier += '-cs'+str(int((P.contactStiffnessPerArea/1e7)))
-    fileClassifier += '-fs'+str(int((P.frictionStiffnessPerArea/1e7)))
-    fileClassifier += '-df'+str(int(P.dryFriction*10))
-    fileClassifier += '-' 
-\end{lstlisting} 
+\begin{tcolorbox}\begin{lstlisting}
+fileClassifier  = ''
+fileClassifier += '-tt'+str(int(P.tEnd*100))
+fileClassifier += '-hh'+str(int(P.stepSize/1e-6))
+fileClassifier += '-nn'+str(int(P.nANCFnodes/60))
+fileClassifier += '-ns'+str(P.nSegments)
+fileClassifier += '-cs'+str(int((P.contactStiffnessPerArea/1e7)))
+fileClassifier += '-fs'+str(int((P.frictionStiffnessPerArea/1e7)))
+fileClassifier += '-df'+str(int(P.dryFriction*10))
+fileClassifier += '-' 
+\end{lstlisting}\end{tcolorbox} 
 For example, for measuring and saving the torque applied to $P_1$ we use:
 \pythonstyle
-\begin{lstlisting}
- sTorquePulley0 = mbs.AddSensor(SensorObject(objectNumber=velControl, fileName=fileDir+'torquePulley0'+fileClassifier+'.txt',outputVariableType=exu.OutputVariableType.Force))
-\end{lstlisting}
+\begin{tcolorbox}\begin{lstlisting}
+sTorquePulley0 = mbs.AddSensor(SensorObject(objectNumber=velControl, fileName=fileDir+'torquePulley0'+fileClassifier+'.txt',outputVariableType=exu.OutputVariableType.Force))
+\end{lstlisting}\end{tcolorbox}
 }    
 \ei
 \item{In section 4, simulation settings and visualization settings are defined.}
@@ -117,15 +117,15 @@ For example, for measuring and saving the torque applied to $P_1$ we use:
 We use \pythoninline{mbs.SetObjectParameter} to change objects' parameters after \pythoninline{mbs.Assemble}. This allows us to change the value of some parameters such as \pythoninline{frictionCoefficient}, \pythoninline{frictionStiffness} during the static simulation and to activate or deactivate constrains before and after the static simulation.
 For example, before the static simulation we deactivate the constraint which is used for prescribing the angular velocity, \pythoninline{velControl}, by:
 \pythonstyle
-\begin{lstlisting}
+\begin{tcolorbox}\begin{lstlisting}
 mbs.SetObjectParameter(velControl, 'activeConnector', False)
-\end{lstlisting} 
+\end{lstlisting}\end{tcolorbox} 
 After the static simulation we activate it again.
 Note also that we set \pythoninline{updateInitialValues=True} in 
 \pythonstyle
-\begin{lstlisting}
+\begin{tcolorbox}\begin{lstlisting}
 exu.SolveStatic(mbs, simulationSettings, updateInitialValues=True) 
-\end{lstlisting}
+\end{lstlisting}\end{tcolorbox}
 which allows us to use the static solution as the initial solution for the dynamic simulation.}
 \item{In section 6, the obtained results are post-processed and saved in files.}
 \item{In section 7, one can choose between performing single simulation and performing parameter variation.
@@ -144,19 +144,15 @@ Pre-built versions of Exudyn are hosted on \texttt{pypi.org}, see the project
 \bi
  \item \exuUrl{https://pypi.org/project/exudyn}{https://pypi.org/project/exudyn}
 \ei
-For installing Exudyn using pip, as with most other packages, in the regular case (if your binary has been pre-built) you just need to do\footnote{If the index of pypi is not updated, it may help to use \texttt{pip install -i https://pypi.org/project/ exudyn} }
+For installing Exudyn using pip, as with most other packages, in the regular case (if your binary has been pre-built) you just need to do
 \bi
   \item[] \texttt{pip install exudyn}
 \ei
-On Linux (currently only pre-built for UBUNTU, but should work on many other linux platforms), {\bf update pip to at least 20.3} and use 
+On Linux (only tested on UBUNTU 18.04 and 20.04, but should work on many other Linux platforms), {\bf update pip to at least 20.3} and use 
 \bi
   \item[] \texttt{pip3 install exudyn}
 \ei
-For pre-releases (use with care!), add '$--$pre' flag:
-\bi
-  \item[] \texttt{pip install exudyn $--$pre}
-\ei  
-  
+
 Results added  
 \exuUrl{https://github.com/THREAD-2-3/beltDriveSimulation/tree/main/src/solution}{in src folder}
 were obtained using Exudyn V1.2.32.dev1. For installing this version do
