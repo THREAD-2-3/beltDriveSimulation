@@ -1,5 +1,5 @@
 \subsection{Description of code}
-For simulating the system we are using the multibody dynamics code Exudyn \cite{Exudyn2023}, see also the GitHub repository of Exudyn\footnote{https://github.com/jgerstmayr/EXUDYN}.
+For simulating the system we are using the multibody dynamics code Exudyn \cite{Exudyn2023}, see also the GitHub repository of Exudyn\footnote{\url{https://github.com/jgerstmayr/EXUDYN}}.
 %
 The code\footnote{\url{https://github.com/THREAD-2-3/beltDriveSimulation/blob/main/src/beltDriveParameterVariation.py}} is divided into sections (1, 2,..., 8) and subsections (A, B, ...) for easier documenting and processing: %, see section 3 with subsections (A, B, ..., E):
 \bi 
@@ -160,10 +160,17 @@ were obtained using Exudyn V1.2.32.dev1. For installing this version do
   \item[] \texttt{pip install exudyn==1.2.32.dev1}
 \ei
              
-For more information for installing Exudyn see the theDoc\footnote{https://github.com/jgerstmayr/EXUDYN}.
+For more information for installing Exudyn see the theDoc\footnote{\url{https://github.com/jgerstmayr/EXUDYN}}.
 %What exactly should I cite here? How to refer to the same footnote?
 \subsubsection{Running the code}
 Two python files are added in src folder. One for performing the belt drive simulation with the default values and another for performing variations and plotting figures. (The two files are identical with the only differences being in the flags which are enabling the operations of the code.)
  
 For running these files the first option is to open an Anaconda prompt and copy paste the file location.
 The second option is to use Spyder and should be selected for making modifications in the code. 
+
+\subsection{Conclusions}
+The repository related to the current section provides the code necessary for reproducing the belt drive simulation and obtaining identical results. This, in combination with the respective section of the deliverable D2.2, provides a full understanding of the implemented methods. The open-source code is accompanied by a detailed description of the experimental setup, explanatory comments, and examples to aid in comprehending the code, as well as instructions for installation. 
+
+Note, that the belt drive simulation is based on the open-source multibody dynamics Exudyn. This multibody dynamics code is extensive and has been developed outside of the THREAD project, hence was not directly included in the project repository. However, we provide the necessary description for running and understanding the code for the belt drive simulation.
+
+As a further step, we consider adding the code used for other numerical investigations published in publications related to THREAD to the THREAD repository; \url{https://github.com/THREAD-2-3}.
