@@ -5,7 +5,7 @@ The code\footnote{\url{https://github.com/THREAD-2-3/beltDriveSimulation/blob/ma
 \bi 
 \item{In section 1, we import necessary modules.}
 \item{Section 2 creates a multibody system, \pythoninline{mbs}.}
-\item{Section 3 consists of the Parameter Function. This function will be repeatedly called from Parameter Variation to update the value of the variables for which we perform variations.} 
+\item{Section 3 consists of \pythoninline{ParameterFunction(...)}. This function will be repeatedly called from \pythoninline{ProcessParameterList()} to update the value of the variables for which we perform variations.} 
 \bi
 \item{
 %In subsection 3.A 
@@ -114,7 +114,7 @@ sTorquePulley0 = mbs.AddSensor(SensorObject(objectNumber=velControl, fileName=fi
 \ei
 \item{In section 4, simulation settings and visualization settings are defined.}
 \item{In section 5, we perform the static and dynamic simulation. %Some parameters such as \pythoninline{frictionCoefficient}, \pythoninline{frictionStiffness} should be given different values during the static simulation. 
-We use \pythoninline{mbs.SetObjectParameter} to change objects' parameters after \pythoninline{mbs.Assemble}. This allows us to change the value of some parameters such as \pythoninline{frictionCoefficient}, \pythoninline{frictionStiffness} during the static simulation and to activate or deactivate constrains before and after the static simulation.
+We use \pythoninline{mbs.SetObjectParameter()} to change objects' parameters after \pythoninline{mbs.Assemble()}. This allows us to change the value of some parameters such as \pythoninline{frictionCoefficient}, \pythoninline{frictionStiffness} during the static simulation and to activate or deactivate constrains before and after the static simulation.
 For example, before the static simulation we deactivate the constraint which is used for prescribing the angular velocity, \pythoninline{velControl}, by:
 \pythonstyle
 \begin{tcolorbox}\begin{lstlisting}
@@ -136,9 +136,10 @@ The option for plotting figures can be chosen as well. All solutions from parame
 \ei
 \subsection{Installation and running}
 \subsubsection{Installing Python and Exudyn}
+\label{installationInstructions}
 The code was tested in a Windows pc using Anaconda, 64bit, Python 3.7.6 and Spyder 4.0.1 which is included in the Anaconda installation.
 
-Exudyn was installed using PIP INSTALLER (pypi.org).
+Exudyn was installed using PIP (Pip Installs Packages).
 %In order to install Exudyn using pip installer:
 Pre-built versions of Exudyn are hosted on \texttt{pypi.org}, see the project
 \bi
@@ -163,10 +164,16 @@ were obtained using Exudyn V1.2.32.dev1. For installing this version do
 For more information for installing Exudyn see the theDoc\footnote{\url{https://github.com/jgerstmayr/EXUDYN}}.
 %What exactly should I cite here? How to refer to the same footnote?
 \subsubsection{Running the code}
-Two python files are added in src folder. One for performing the belt drive simulation with the default values and another for performing variations and plotting figures. (The two files are identical with the only differences being in the flags which are enabling the operations of the code.)
+Two python files are added in src folder. One for performing the belt drive simulation with the default values and another for performing variations and plotting figures. Note that, the two files are identical with the only differences being in the flags which are enabling the operations of the code.
  
-For running these files the first option is to open an Anaconda prompt and copy paste the file location.
-The second option is to use Spyder and should be selected for making modifications in the code. 
+For running these files the first option is to use an Anaconda prompt, following the steps:
+\bi
+\item Open an Anaconda prompt.
+\item Navigate to the directory containing the Python file: Use the "cd" command to change the current directory to the one that contains the Python file.
+\item Run the Python file using the command "python beltDriveSingleRun.py" for performing a single run or "python beltDriveParameterVariation.py" for performing parameter variations. 
+\ei
+
+The second option, which enable the user to edit and modify the code, is to use a Python environment. We recommend Spyder, see \ref{installationInstructions}.
 
 \subsection{Conclusions}
 The repository related to the current section provides the code necessary for reproducing the belt drive simulation and obtaining identical results. This, in combination with the respective section of the deliverable D2.2, provides a full understanding of the implemented methods. The open-source code is accompanied by a detailed description of the experimental setup, explanatory comments, and examples to aid in comprehending the code, as well as instructions for installation. 
