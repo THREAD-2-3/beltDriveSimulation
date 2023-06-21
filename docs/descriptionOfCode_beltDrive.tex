@@ -3,19 +3,19 @@ For simulating the system we are using the multibody dynamics code Exudyn \cite{
 %
 The code\footnote{\url{https://github.com/THREAD-2-3/beltDriveSimulation/blob/main/src/beltDriveParameterVariation.py}} is divided into sections (1, 2,..., 8) and subsections (A, B, ...) for easier documenting and processing: %, see section 3 with subsections (A, B, ..., E):
 \bi 
-\item{In section 1, we import necessary modules.}
+\item{In section 1, we import the necessary modules.}
 \item{Section 2 creates a multibody system, \pythoninline{mbs}.}
 \item{Section 3 consists of \pythoninline{ParameterFunction(...)}. This function will be repeatedly called from \pythoninline{ProcessParameterList()} to update the value of the variables for which we perform variations.} 
 \bi
 \item{
-%In subsection 3.A 
-We create a class \pythoninline{P} which contains all parameters for which we can perform Parameter variations. First the parameters are given their default values, see \mytab{tab_dafaultValues}. Then we update the values of varying parameters through:
+%In subsection 3. A 
+We create a class \pythoninline{P} which contains all parameters for which we can perform Parameter variations. First, the parameters are given their default values, see \mytab{tab_dafaultValues}. Then we update the values of varying parameters through:
 \pythonstyle
 \begin{tcolorbox}\begin{lstlisting}
-for key,value in parameterSet.items():
-  setattr(P,key,value)
+for key, value in parameterSet.items():
+    setattr(P,key,value)
 \end{lstlisting}\end{tcolorbox}		
-where \pythoninline{setattr()} is a Python function which sets the value of the attribute of an object.}
+where \pythoninline{setattr()} is a Python function that sets the value of the attribute of an object.}
 %
 \begin{table}[btp!]
     \caption{Default values for parameters} \label{tab_dafaultValues}
@@ -55,7 +55,7 @@ where \pythoninline{setattr()} is a Python function which sets the value of the 
 %
 \item{
 %In subsection 3.B 
-We create the model with respect to the parameter values given in  \mytab{tab_beltdriveParameters}}. % which is going to be updated for every parameter variation.}
+We create the model with the parameter values given in  \mytab{tab_beltdriveParameters}}. % which is going to be updated for every parameter variation.}
 %
 %\item{...}
 %
@@ -77,7 +77,7 @@ def UFvelocityDrive(mbs, t, itemNumber, lOffset):
     \centering
     %\begin{tabular}{@{}lrlp{0.4\textwidth}@{}} \toprule
     \begin{tabular}{c|c} \hline
-        Input & Value \\ \hline 
+        Input & Value or already defined symbol \\ \hline 
         \pythoninline{physicsMassPerLength} & $\rho A$\\
         \pythoninline{physicsBendingStiffness} & $EI$\\
         \pythoninline{physicsAxialStiffness} & $EA$\\
@@ -92,7 +92,7 @@ def UFvelocityDrive(mbs, t, itemNumber, lOffset):
 \end{table}
 \item{For the ANCF beam elements modeling the belt we are using \pythoninline{ObjectANCFCable2D}, see the documentation\footnote{\texttt{theDoc.pdf}: \url{https://github.com/jgerstmayr/EXUDYN/blob/master/docs/theDoc/theDoc.pdf}} of Exudyn \cite{Exudyn2023}.
 The input of \pythoninline{ObjectANCFCable2D} is given in \mytab{tab_ObjectANCFCable2D}.}
-\item{During the simulation we measure the angular velocity and torque for both pulleys over time, as well as, the axial velocity, the tangential contact stresses, the normal contact stresses and the axial forces over the length of the belt. For this we use \pythoninline{mbs.AddSensor()}. For saving the solution in a different file for each parameter variation we name the solution files using a string which is generated according to the used values for the parameters which can vary:
+\item{During the simulation we measure the angular velocity and torque for both pulleys over time, as well as, the axial velocity, the tangential contact stresses, the normal contact stresses, and the axial forces over the length of the belt. For this, we use \pythoninline{mbs.AddSensor()}. For saving the solution in a different file for each parameter variation we name the solution files using a string that is generated according to the used values for the parameters which can vary:
 \pythonstyle
 \begin{tcolorbox}\begin{lstlisting}
 fileClassifier  = ''
@@ -100,8 +100,8 @@ fileClassifier += '-tt'+str(int(P.tEnd*100))
 fileClassifier += '-hh'+str(int(P.stepSize/1e-6))
 fileClassifier += '-nn'+str(int(P.nANCFnodes/60))
 fileClassifier += '-ns'+str(P.nSegments)
-fileClassifier += '-cs'+str(int((P.contactStiffnessPerArea/1e7)))
-fileClassifier += '-fs'+str(int((P.frictionStiffnessPerArea/1e7)))
+fileClassifier += '-cs'+str(int(P.contactStiffnessPerArea/1e7))
+fileClassifier += '-fs'+str(int(P.frictionStiffnessPerArea/1e7))
 fileClassifier += '-df'+str(int(P.dryFriction*10))
 fileClassifier += '-' 
 \end{lstlisting}\end{tcolorbox} 
@@ -114,33 +114,33 @@ sTorquePulley0 = mbs.AddSensor(SensorObject(objectNumber=velControl, fileName=fi
 \ei
 \item{In section 4, simulation settings and visualization settings are defined.}
 \item{In section 5, we perform the static and dynamic simulation. %Some parameters such as \pythoninline{frictionCoefficient}, \pythoninline{frictionStiffness} should be given different values during the static simulation. 
-We use \pythoninline{mbs.SetObjectParameter()} to change objects' parameters after \pythoninline{mbs.Assemble()}. This allows us to change the value of some parameters such as \pythoninline{frictionCoefficient}, \pythoninline{frictionStiffness} during the static simulation and to activate or deactivate constrains before and after the static simulation.
-For example, before the static simulation we deactivate the constraint which is used for prescribing the angular velocity, \pythoninline{velControl}, by:
+We use \pythoninline{mbs.SetObjectParameter()} to change objects' parameters after \pythoninline{mbs.Assemble()}. This allows us to change the value of some parameters such as \pythoninline{frictionCoefficient}, \pythoninline{frictionStiffness} during the static simulation and to activate or deactivate constraints before and after the static simulation.
+For example, before the static simulation, we deactivate the constraint which is used for prescribing the angular velocity, \pythoninline{velControl}, by:
 \pythonstyle
 \begin{tcolorbox}\begin{lstlisting}
 mbs.SetObjectParameter(velControl, 'activeConnector', False)
 \end{lstlisting}\end{tcolorbox} 
-After the static simulation we activate it again.
+After the static simulation, we activate it again.
 Note also that we set \pythoninline{updateInitialValues=True} in 
 \pythonstyle
 \begin{tcolorbox}\begin{lstlisting}
 exu.SolveStatic(mbs, simulationSettings, updateInitialValues=True) 
 \end{lstlisting}\end{tcolorbox}
-which allows us to use the static solution as the initial solution for the dynamic simulation.}
+which is required to use the static solution as the initial solution for the subsequent dynamic simulation.}
 \item{In section 6, the obtained results are post-processed and saved in files.}
-\item{In section 7, one can choose between performing single simulation and performing parameter variation.
+\item{In section 7, one can choose between performing a single simulation and performing parameter variation.
 The option for plotting figures can be chosen as well. All solutions from parameter variations have already been added in \exuUrl{https://github.com/THREAD-2-3/beltDriveSimulation/tree/main/src/solution}{the solution folder}. Solutions from new runs are stored by default in solutionNosync.} %How to use underscore in the text?
-\item{In section 8, stored results are plotted. Cases given in \pythoninline{iCases} = $[1,..., 4]$ correspond to different varying quantities; number of elements, step size, other quantities (number of segments, normal contact stiffness, tangential contact stiffness, dry friction coefficient) and evaluation time.}
+\item{In section 8, stored results are plotted. Cases given in \pythoninline{iCases} = $[1,..., 4]$ correspond to different varying quantities; the number of elements, step size, other quantities (number of segments, normal contact stiffness, tangential contact stiffness, dry friction coefficient) and evaluation time.}
 %
 
 \ei
 \subsection{Installation and running}
 \subsubsection{Installing Python and Exudyn}
 \label{installationInstructions}
-The code was tested in a Windows pc using Anaconda, 64bit, Python 3.7.6 and Spyder 4.0.1 which is included in the Anaconda installation.
+The code was tested in a Windows Laptop using Anaconda, 64bit, Python 3.7.6 and Spyder 4.0.1 which is included in the Anaconda installation.
 
 Exudyn was installed using PIP (Pip Installs Packages).
-%In order to install Exudyn using pip installer:
+% To install Exudyn using pip installer:
 Pre-built versions of Exudyn are hosted on \texttt{pypi.org}, see the project
 \bi
  \item \exuUrl{https://pypi.org/project/exudyn}{https://pypi.org/project/exudyn}
@@ -161,23 +161,24 @@ were obtained using Exudyn V1.2.32.dev1. For installing this version do
   \item[] \texttt{pip install exudyn==1.2.32.dev1}
 \ei
              
-For more information for installing Exudyn see the theDoc\footnote{\url{https://github.com/jgerstmayr/EXUDYN}}.
+For more information on installing Exudyn see the theDoc\footnote{\url{https://github.com/jgerstmayr/EXUDYN}}.
 %What exactly should I cite here? How to refer to the same footnote?
 \subsubsection{Running the code}
-Two python files are added in src folder. One for performing the belt drive simulation with the default values and another for performing variations and plotting figures. Note that, the two files are identical with the only differences being in the flags which are enabling the operations of the code.
+Two Python files are added in the src folder. One for performing the belt drive simulation with the default values and another for performing variations and plotting figures. Note that, the two files are identical with the only differences being in the flags which are enabling the operations of the code.
  
 For running these files the first option is to use an Anaconda prompt, following the steps:
 \bi
-\item Open an Anaconda prompt.
-\item Navigate to the directory containing the Python file: Use the "cd" command to change the current directory to the one that contains the Python file.
+\item Open an Anaconda prompt and navigate to the directory containing the Python file. %: Use the "cd" command to change the current directory to the one that contains the Python file.
 \item Run the Python file using the command "python beltDriveSingleRun.py" for performing a single run or "python beltDriveParameterVariation.py" for performing parameter variations. 
 \ei
 
-The second option, which enable the user to edit and modify the code, is to use a Python environment. We recommend Spyder, see \ref{installationInstructions}.
+The second option, which enables the user to edit and modify the code, is to use a Python environment. We recommend Spyder, see \ref{installationInstructions}.
 
 \subsection{Conclusions}
-The repository related to the current section provides the code necessary for reproducing the belt drive simulation and obtaining identical results. This, in combination with the respective section of the deliverable D2.2, provides a full understanding of the implemented methods. The open-source code is accompanied by a detailed description of the experimental setup, explanatory comments, and examples to aid in comprehending the code, as well as instructions for installation. 
+The repository related to the current section provides the code necessary for reproducing the belt drive simulation results. 
+In combination with the respective section of the deliverable D2.2, this provides a full understanding of the implemented methods. 
+The open-source code is accompanied by a detailed description of the experimental setup, explanatory comments, and examples to aid in comprehending the code, as well as instructions for installation. 
 
 Note, that the belt drive simulation is based on the open-source multibody dynamics Exudyn. This multibody dynamics code is extensive and has been developed outside of the THREAD project, hence was not directly included in the project repository. However, we provide the necessary description for running and understanding the code for the belt drive simulation.
 
-As a further step, we consider adding the code used for other numerical investigations published in publications related to THREAD to the THREAD repository; \url{https://github.com/THREAD-2-3}.
+As a further step, we consider adding the code used for other numerical investigations published in publications related to THREAD to the GitHub repository; \url{https://github.com/THREAD-2-3}.
